@@ -28,7 +28,7 @@ export const BOOKINGS_PER_PAGE = 5;
 export const image_base_url: string =
   process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL || "";
 
-const PRODUCTION_DOMAIN = "";
+const PRODUCTION_DOMAIN = "https://quick-cinema-beige.vercel.app";
 
 const DEVELOPMENT_DOMAIN = "http://localhost:3000";
 

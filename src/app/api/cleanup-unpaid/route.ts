@@ -3,10 +3,14 @@ import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: Request) {
+  const auth = req.headers.get("Authorization");
+  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
   // Allowed time: 60 minutes
   const TIMEOUT_MINUTES = 60;
-
   const expirationTime = new Date(Date.now() - TIMEOUT_MINUTES * 60 * 1000);
 
   // Get unpaid bookings that are more than 60 minutes old

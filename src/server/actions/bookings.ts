@@ -77,7 +77,7 @@ export const createBooking = async ({
     return {
       status: 201,
       message:
-        "Your reservation is made. Please complete payment within one hour to confirm, otherwise it will be canceled.",
+        "Your reservation has been made. Please complete the payment by the end of the day to confirm your booking; otherwise, it will be automatically canceled.",
       data,
     };
   } catch (error) {

@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  clerkUserId String   @unique
+  password    String?
+  name        String?
+  image       String?
+  phone       String?
+  role        UserRole @default(USER)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  bookings Booking[] @relation("UserBookings")
+}
+
+model Movie {
+  id               String  @id @default(cuid())
+  tmdbId           String  @unique
+  title            String
+  overview         String
+  posterPath       String
+  backdropPath     String
+  releaseDate      String
+  originalLanguage String?
+  tagline          String?
+
+  voteAverage Float
+  runtime     Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  genres Genre[] @relation("MovieGenres")
+  casts  Cast[]  @relation("MovieCasts")
+
+  shows Show[]
+}
+
+model Genre {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  movies Movie[] @relation("MovieGenres")
+}
+
+model Cast {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  profilePath String?
+  movies      Movie[] @relation("MovieCasts")
+}
+
+model Show {
+  id            String   @id @default(cuid())
+  showDateTime  DateTime
+  showPrice     Float
+  occupiedSeats Json     @default("{}")
+
+  movieId String
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  bookings Booking[]
+}
+
+model Booking {
+  id          String   @id @default(uuid())
+  amount      Float
+  bookedSeats String[]
+  isPaid      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // User Relation
+  userId String
+  user   User   @relation("UserBookings", fields: [userId], references: [id], onDelete: Cascade)
+
+  // Show Relation
+  showId String
+  show   Show   @relation(fields: [showId], references: [id], onDelete: Cascade)
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}

@@ -1,8 +1,0 @@
-{
-  "cron": {
-    "cleanup-bookings": {
-      "schedule": "0 * * * *",
-      "path": "/api/cleanup-unpaid"
-    }
-  }
-}

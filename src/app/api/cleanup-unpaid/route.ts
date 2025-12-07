@@ -9,15 +9,9 @@ export async function GET(req: Request) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  // Allowed time: 60 minutes
-  const TIMEOUT_MINUTES = 60;
-  const expirationTime = new Date(Date.now() - TIMEOUT_MINUTES * 60 * 1000);
-
-  // Get unpaid bookings that are more than 60 minutes old
   const bookings = await prisma.booking.findMany({
     where: {
       isPaid: false,
-      createdAt: { lt: expirationTime },
     },
     include: {
       show: true,

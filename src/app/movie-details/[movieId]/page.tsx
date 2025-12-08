@@ -37,7 +37,7 @@ const MovieDetails = async ({ params }: PageProps) => {
   }
 
   return (
-    <div className="container-section pt-32 md:pt-32">
+    <div className="container-section pt-14 md:pt-32">
       <div className="flex flex-col md:flex-row gap-8">
         <Image
           src={image_base_url + (movie.posterPath ?? "")}
@@ -65,20 +65,20 @@ const MovieDetails = async ({ params }: PageProps) => {
             {movie.overview}
           </p>
 
-          <p>
+          <p className="max-sm:text-xs">
             {timeFormat(movie.runtime)} •
             {movie.genres.map((genre) => genre.name).join(",  ")} •{" "}
             {movie.releaseDate.split("-")[0]}
           </p>
 
-          <div className="flex items-center flex-wrap gap-4 mt-4">
+          <div className="flex items-center flex-wrap gap-3 sm:gap-4 mt-4">
             <Link
               href="/#trailers"
-              className="main-btn flex items-center gap-2 px-7 bg-gray-800 hover:bg-gray-900"
+              className="main-btn flex items-center gap-2 px-4 sm:px-7 bg-gray-800 hover:bg-gray-900"
             >
               <PlayCircleIcon className="w-5 h-5" /> Watch Trailer
             </Link>
-            <Link href="#dateSelect" className="main-btn px-10">
+            <Link href="#dateSelect" className="main-btn px-5 sm:px-10">
               Buy Tickets
             </Link>
 
@@ -114,7 +114,7 @@ const MovieDetails = async ({ params }: PageProps) => {
 
       <p className="text-lg font-medium mt-20 mb-8">You Many Also Like</p>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {shows.slice(0, 4).map((show, index) => (
           <MovieCard key={index} show={show} />
         ))}

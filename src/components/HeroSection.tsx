@@ -16,16 +16,16 @@ const HeroSection = () => {
           className="max-h-11 lg:h-11"
         />
 
-        <h1 className="text-5xl md:text-[70px] md:leading-[1.1] font-semibold max-w-md">
+        <h1 className="text-4xl sm:text-5xl md:text-[70px] md:leading-[1.1] font-semibold max-w-md">
           Guardians <br />
           of the Galaxy
         </h1>
 
-        <div className="flex items-center gap-4 text-gray-300">
+        <div className="flex items-center gap-3 sm:gap-4 text-gray-300 max-sm:text-sm">
           <span>Action | Adventure | Sci-Fi</span>
 
           <div className="flex items-center gap-1">
-            <Calendar1Icon className="w-4 h-4" /> 2025
+            <Calendar1Icon className="w-4 h-4" /> {new Date().getFullYear()}
           </div>
 
           <div className="flex items-center gap-1">

@@ -19,7 +19,7 @@ export default function SignInPage() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="absolute bottom-14 left-1/2 -translate-x-1/2">
+      <div className="absolute bottom-[52px] left-1/2 -translate-x-1/2">
         <BackButton
           title="Go Back"
           variant="default"

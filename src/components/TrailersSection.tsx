@@ -32,15 +32,15 @@ const TrailersSection = () => {
         Trailers
       </h2>
 
-      <div className="relative mt-6">
+      <div className="relative mt-6 mx-auto w-full aspect-video  max-w-[960px]">
         <BlurCircle top="-50px" right="-50px" />
 
         <ReactPlayer
           url={currentTrailer.videoUrl}
           controls={false}
-          className="mx-auto max-w-full"
-          width="960px"
-          height="540px"
+          width="100%"
+          height="100%"
+          className="absolute top-0 left-0"
         />
       </div>
 

@@ -1,6 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { confirmDelete } from "@/lib/swal";
 import { deleteUser } from "@/server/actions/user";
 import { Trash2 } from "lucide-react";
 
@@ -13,52 +15,44 @@ const DeleteUserButton = ({ userId, onSuccess }: DeleteUserButtonProps) => {
 
   const handleDelete = async () => {
     try {
-      if (confirm("Are you sure you want to delete this User?")) {
-        const res = await deleteUser(userId);
+      const confirmed = await confirmDelete(
+        "Delete User?",
+        "Are you sure you want to delete this user?",
+      );
 
-        if (res.status && res.message) {
-          if (res.status === 200) {
-            toast({
-              title: "Success! 🎉",
-              description: res.message,
-              className: "bg-green-100 text-green-600",
-            });
+      if (!confirmed) return;
 
-            if (onSuccess) {
-              onSuccess();
-            }
-          } else {
-            toast({
-              title: "Error",
-              description: res.message,
-              className: "bg-red-100 text-red-600",
-            });
-          }
-        } else {
-          toast({
-            title: "Error",
-            description: "Unexpected response from server.",
-            className: "bg-red-100 text-red-600",
-          });
-        }
+      const res = await deleteUser(userId);
+
+      if (res.success) {
+        toast({
+          title: "Success! 🎉",
+          description: res.message,
+          className: "bg-green-100 text-green-600",
+        });
+
+        onSuccess?.();
+      } else {
+        toast({
+          title: "Error",
+          description: res.message,
+          className: "bg-red-100 text-red-600",
+        });
       }
     } catch (error) {
-      console.error(error);
       toast({
         title: "Error",
-        description: "An error occurred while deleting the User.",
+        description:
+          error instanceof Error ? error.message : "Unknown error occurred",
         className: "bg-red-100 text-red-600",
       });
     }
   };
 
   return (
-    <div
-      onClick={handleDelete}
-      className="bg-red-600 text-white p-2 hover:bg-red-500 transition-all duration-300 rounded-lg inline-block cursor-pointer"
-    >
+    <Button onClick={handleDelete} variant="destructive" size="icon">
       <Trash2 size={20} />
-    </div>
+    </Button>
   );
 };
 

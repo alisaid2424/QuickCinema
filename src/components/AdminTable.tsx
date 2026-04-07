@@ -140,7 +140,7 @@ const AdminTable: FC<AdminTableProps> = ({
                       href={`/admin/${type}/${item.clerkUserId}/edit`}
                       className="bg-green-600 p-2 rounded-md hover:bg-green-500 transition"
                     >
-                      <Edit size={18} color="white" />
+                      <Edit size={19} color="white" />
                     </Link>
 
                     {item.role !== UserRole.ADMIN && (

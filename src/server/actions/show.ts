@@ -106,7 +106,7 @@ export const deleteShow = async (showId: string) => {
     });
 
     if (!show) {
-      return { status: 404, message: "Show not found" };
+      return { success: false, message: "Show not found" };
     }
 
     await prisma.show.delete({
@@ -119,9 +119,11 @@ export const deleteShow = async (showId: string) => {
     revalidatePath(Routes.ROOT);
     revalidatePath(Pages.MOVIES);
 
-    return { status: 200, message: "Show deleted successfully" };
+    return { success: true, message: "Show deleted successfully" };
   } catch (error) {
-    console.error("Delete show error:", error);
-    return { status: 500, message: "Internal server error" };
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : "Internal server error",
+    };
   }
 };

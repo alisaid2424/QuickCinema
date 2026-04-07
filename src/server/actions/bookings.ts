@@ -36,7 +36,7 @@ export const createBooking = async ({
 
     //Check if any seat is pre-booked
     const isSeatTaken = selectedSeats.some(
-      (seat: string) => occupiedSeats[seat]
+      (seat: string) => occupiedSeats[seat],
     );
 
     if (isSeatTaken) {
@@ -117,40 +117,47 @@ export const updateBookingPayment = async (bookingId: string) => {
 };
 
 export const deleteBooking = async (bookingId: string) => {
-  const booking = await prisma.booking.findUnique({
-    where: { id: bookingId },
-    include: { show: true },
-  });
+  try {
+    const booking = await prisma.booking.findUnique({
+      where: { id: bookingId },
+      include: { show: true },
+    });
 
-  if (!booking) return;
+    if (!booking) return;
 
-  const occupiedSeats = booking.show.occupiedSeats as Record<string, string>;
+    const occupiedSeats = booking.show.occupiedSeats as Record<string, string>;
 
-  // Delete the seats booked
-  booking.bookedSeats.forEach((seat) => {
-    delete occupiedSeats[seat];
-  });
+    // Delete the seats booked
+    booking.bookedSeats.forEach((seat) => {
+      delete occupiedSeats[seat];
+    });
 
-  const showData = await prisma.show.update({
-    where: { id: booking.showId },
-    data: { occupiedSeats },
-    include: {
-      movie: true,
-    },
-  });
+    const showData = await prisma.show.update({
+      where: { id: booking.showId },
+      data: { occupiedSeats },
+      include: {
+        movie: true,
+      },
+    });
 
-  // Delete booking
-  await prisma.booking.delete({
-    where: { id: bookingId },
-  });
+    // Delete booking
+    await prisma.booking.delete({
+      where: { id: bookingId },
+    });
 
-  const dateKey = new Date(showData.showDateTime).toISOString().split("T")[0];
+    const dateKey = new Date(showData.showDateTime).toISOString().split("T")[0];
 
-  revalidatePath(Routes.LISTSHOWS);
-  revalidatePath(Routes.LISTBOOKINGS);
-  revalidatePath(Routes.ADMIN);
-  revalidatePath(Pages.MYBOOKINGS);
-  revalidatePath(`${Pages.SEATLAYOUT}/${showData.movie.id}/${dateKey}`);
+    revalidatePath(Routes.LISTSHOWS);
+    revalidatePath(Routes.LISTBOOKINGS);
+    revalidatePath(Routes.ADMIN);
+    revalidatePath(Pages.MYBOOKINGS);
+    revalidatePath(`${Pages.SEATLAYOUT}/${showData.movie.id}/${dateKey}`);
 
-  return { status: 200, message: "Booking deleted and seats freed." };
+    return { success: true, message: "Booking deleted and seats freed." };
+  } catch (error) {
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : "Internal server error",
+    };
+  }
 };

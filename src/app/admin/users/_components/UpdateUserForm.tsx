@@ -14,6 +14,7 @@ import { CheckboxWithLabel } from "@/components/inputs/CheckboxWithLabel";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import ProfileImagePreview from "@/components/ProfileImagePreview";
+import { useUser } from "@clerk/nextjs";
 
 interface UpdateUserFormProps {
   user: User;
@@ -22,6 +23,7 @@ interface UpdateUserFormProps {
 const UpdateUserForm = ({ user }: UpdateUserFormProps) => {
   const router = useRouter();
   const { toast } = useToast();
+  const { user: userClerk } = useUser();
   const [isPending, startTransition] = useTransition();
   const [isAdmin, setIsAdmin] = useState(user.role === UserRole.ADMIN);
 
@@ -58,6 +60,7 @@ const UpdateUserForm = ({ user }: UpdateUserFormProps) => {
             className: "bg-green-100 text-green-600",
           });
 
+          await userClerk?.reload();
           router.push(`${Routes.USERS}?pageNumber=1`);
         } else {
           toast({

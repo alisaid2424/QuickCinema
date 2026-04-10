@@ -43,7 +43,7 @@ export const getShow = cache(
   },
 
   [`getShow-${crypto.randomUUID()}`],
-  { revalidate: 3600 }
+  { revalidate: 3600 },
 );
 
 export const getShows = cache(
@@ -59,18 +59,18 @@ export const getShows = cache(
           },
         },
       },
-      orderBy: { showDateTime: "asc" },
+      orderBy: { showDateTime: "desc" },
     });
 
     const uniqueMovies = Array.from(
-      new Map(shows.map((s) => [s.movie.id, s])).values()
+      new Map(shows.map((s) => [s.movie.id, s])).values(),
     );
 
     return uniqueMovies;
   },
 
   ["get-shows"],
-  { revalidate: 3600 }
+  { revalidate: 3600 },
 );
 
 export const getAllShows = cache(
@@ -93,7 +93,7 @@ export const getAllShows = cache(
   },
 
   ["get-all-shows"],
-  { revalidate: 3600 }
+  { revalidate: 3600 },
 );
 
 export const getShowsCount = async () => {
@@ -119,5 +119,5 @@ export const getOccupiedSeats = cache(
   },
 
   ["getOccupiedSeats"],
-  { revalidate: 3600 }
+  { revalidate: 3600 },
 );

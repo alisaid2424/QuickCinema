@@ -11,9 +11,10 @@ import {
 } from "lucide-react";
 import { Routes } from "@/constants/enums";
 import Image from "next/image";
-import { User } from "@prisma/client";
+import { useUser } from "@clerk/nextjs";
 
-const AdminSidebar = ({ user }: { user: User }) => {
+const AdminSidebar = () => {
+  const { user } = useUser();
   const pathname = usePathname();
 
   const tabs = [
@@ -36,14 +37,19 @@ const AdminSidebar = ({ user }: { user: User }) => {
   return (
     <div className=" md:w-40 lg:w-64 w-16 border-r min-h-screen text-sm border-gray-300/20 pt-8 flex flex-col">
       <Image
-        src={user.image ?? ""}
+        src={
+          user?.imageUrl ??
+          "https://res.cloudinary.com/djhoc0ys4/image/upload/v1758875923/profile_images/img-profile-1.jpg.jpg"
+        }
         alt="img-user"
         width={200}
         height={200}
         className="h-9 w-9 md:w-14 md:h-14 rounded-full mx-auto max-md:mb-4"
       />
 
-      <p className="md:my-4 text-base max-md:hidden text-center">{user.name}</p>
+      <p className="md:my-4 text-base max-md:hidden text-center">
+        {user?.fullName}
+      </p>
 
       {tabs.map(({ title, href, icon: Icon }) => {
         const isActive = isActiveTab(href);

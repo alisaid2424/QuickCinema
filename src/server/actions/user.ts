@@ -37,7 +37,7 @@ export async function UpdateUser(clerkUserId: string, data: Partial<User>) {
     });
 
     revalidatePath(Routes.ADMIN);
-    revalidatePath(Routes.USERS);
+    revalidatePath(`${Routes.USERS}?pageNumber=1`);
     revalidatePath(`${Routes.USERS}/${user.clerkUserId}/edit`);
 
     return { user };

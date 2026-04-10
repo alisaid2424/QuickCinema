@@ -137,9 +137,9 @@ const CheckoutForm = ({ amount, bookingId }: CheckoutFormProps) => {
           className="w-full mt-5 !py-6 text-lg"
         >
           {isPending ? (
-            <>
+            <div className="element-center gap-3">
               Loading... <LoaderCircle className="animate-spin mx-auto" />
-            </>
+            </div>
           ) : (
             "Submit"
           )}

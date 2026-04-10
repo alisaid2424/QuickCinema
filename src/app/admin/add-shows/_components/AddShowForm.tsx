@@ -6,7 +6,7 @@ import { ShowSchema, TShowSchema } from "@/zod-schemas/show";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { CheckIcon, DeleteIcon, LoaderCircle, StarIcon } from "lucide-react";
 import { InputWithLabel } from "@/components/inputs/InputWithLabel";
 import { MovieTMDB } from "@/types/movie";
@@ -20,7 +20,7 @@ const AddShowForm = ({ movies }: { movies: MovieTMDB[] }) => {
   const router = useRouter();
   const { toast } = useToast();
   const [datetimeInput, setDatetimeInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<TShowSchema>({
     resolver: zodResolver(ShowSchema),
@@ -45,37 +45,34 @@ const AddShowForm = ({ movies }: { movies: MovieTMDB[] }) => {
     setDatetimeInput("");
   };
 
-  const onSubmit = async (data: TShowSchema) => {
-    if (isLoading) return;
-    setIsLoading(true);
-    try {
-      // Call server action
-      const res = await addShow(data);
+  const onSubmit = (data: TShowSchema) => {
+    startTransition(async () => {
+      try {
+        const res = await addShow(data);
 
-      if (res.status === 201) {
-        toast({
-          title: "Success! 🎉",
-          description: res.message,
-          className: "bg-green-100 text-green-600",
-        });
-        router.push(`${Routes.LISTSHOWS}?pageNumber=1`);
-      } else {
+        if (res.status === 201) {
+          toast({
+            title: "Success! 🎉",
+            description: res.message,
+            className: "bg-green-100 text-green-600",
+          });
+          router.push(`${Routes.LISTSHOWS}?pageNumber=1`);
+        } else {
+          toast({
+            title: "Error",
+            description: res.message,
+            className: "bg-red-100 text-red-600",
+          });
+        }
+      } catch (error) {
         toast({
           title: "Error",
-          description: res.message,
+          description:
+            error instanceof Error ? error.message : "Something went wrong.",
           className: "bg-red-100 text-red-600",
         });
       }
-    } catch (error) {
-      console.error(error);
-      toast({
-        title: "Error",
-        description: "Something went wrong.",
-        className: "bg-red-100 text-red-600",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    });
   };
 
   return (
@@ -203,8 +200,14 @@ const AddShowForm = ({ movies }: { movies: MovieTMDB[] }) => {
         )}
 
         {/* Submit */}
-        <Button size="lg" type="submit" disabled={isLoading} className="mt-6">
-          {isLoading ? <LoaderCircle className="animate-spin" /> : "Add Show"}
+        <Button size="lg" type="submit" disabled={isPending} className="mt-6">
+          {isPending ? (
+            <>
+              Added... <LoaderCircle className="animate-spin" />
+            </>
+          ) : (
+            "Add Show"
+          )}
         </Button>
       </form>
     </Form>

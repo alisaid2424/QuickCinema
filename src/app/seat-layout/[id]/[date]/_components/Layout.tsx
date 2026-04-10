@@ -47,7 +47,13 @@ const Layout = ({ date, dateTime, occupiedSeats }: LayoutProps) => {
 
   const handleBookTickets = async () => {
     if (!user) {
-      openSignIn();
+      openSignIn({
+        appearance: {
+          elements: {
+            modalContent: "mx-auto my-auto",
+          },
+        },
+      });
       return;
     }
 
@@ -70,7 +76,7 @@ const Layout = ({ date, dateTime, occupiedSeats }: LayoutProps) => {
       });
 
       router.push(
-        `/checkout?amount=${res.data?.amount}&bookingId=${res.data?.id}`
+        `/checkout?amount=${res.data?.amount}&bookingId=${res.data?.id}`,
       );
     } else {
       toast({

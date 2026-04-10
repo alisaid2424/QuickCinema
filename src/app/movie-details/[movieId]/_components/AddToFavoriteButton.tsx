@@ -23,7 +23,13 @@ const AddToFavoriteButton = ({
   const handleAddToFavoriteButton = async () => {
     try {
       if (!user) {
-        openSignIn();
+        openSignIn({
+          appearance: {
+            elements: {
+              modalContent: "mx-auto my-auto",
+            },
+          },
+        });
         return;
       }
 
@@ -44,10 +50,10 @@ const AddToFavoriteButton = ({
         });
       }
     } catch (error) {
-      console.error(error);
       toast({
         title: "Error",
-        description: "Unexpected error occurred",
+        description:
+          error instanceof Error ? error.message : "Unexpected error occurred",
         className: "bg-red-100 text-red-600",
       });
     }

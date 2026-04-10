@@ -93,7 +93,15 @@ const Header = () => {
               </UserButton>
             ) : (
               <Button
-                onClick={() => openSignIn()}
+                onClick={() =>
+                  openSignIn({
+                    appearance: {
+                      elements: {
+                        modalContent: "mx-auto my-auto",
+                      },
+                    },
+                  })
+                }
                 className="rounded-full text-white hover:bg-primary-foreground transition-colors duration-300"
               >
                 Login

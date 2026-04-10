@@ -118,6 +118,7 @@ export const deleteShow = async (showId: string) => {
     revalidatePath(Routes.ADMIN);
     revalidatePath(Routes.ROOT);
     revalidatePath(Pages.MOVIES);
+    revalidatePath(Pages.MYBOOKINGS);
 
     return { success: true, message: "Show deleted successfully" };
   } catch (error) {

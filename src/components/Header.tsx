@@ -31,7 +31,7 @@ const Header = () => {
 
   return (
     !pathname.startsWith(Routes.ADMIN) && (
-      <header className="sticky top-0 w-full z-50">
+      <header className="fixed top-0 left-0 w-full z-50 bg-transparent">
         <div className="container-section flex items-center justify-between py-5">
           <Link href={Routes.ROOT} className="max-md:flex-1">
             <Logo />

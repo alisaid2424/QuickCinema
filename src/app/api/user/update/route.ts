@@ -56,7 +56,7 @@ export async function PATCH(req: Request) {
 
     // Sanitized fields
     const safePhone =
-      typeof phone === "string" ? phone : existingUser.phone ?? "";
+      typeof phone === "string" ? phone : (existingUser.phone ?? "");
 
     const newRole =
       typeof admin === "boolean"
@@ -104,7 +104,7 @@ export async function PATCH(req: Request) {
         message: "User updated successfully",
         user: updatedUser,
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     console.error("Update error:", err);

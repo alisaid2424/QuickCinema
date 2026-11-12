@@ -5,15 +5,29 @@ import { Pages } from "@/constants/enums";
 
 const HeroSection = () => {
   return (
-    <div className="relative bg-cover bg-[url('/backgroundImage.jpg')] bg-center h-screen -mt-[90px]">
-      <div className="overlay absolute inset-0 w-full h-full bg-black/60" />
+    <section className="relative h-dvh w-full overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/backgroundImage.webp"
+          alt="background-hero-img"
+          fill
+          priority
+          fetchPriority="high"
+          sizes="100vw"
+          quality={75}
+          className="object-cover object-center"
+        />
+        <div className="overlay absolute inset-0 w-full h-full bg-black/60" />
+      </div>
+
       <div className="relative container-section flex flex-col items-start justify-center h-full gap-4 ">
         <Image
           src="/marvelLogo-D2PF-9pQ.svg"
-          alt="maravel-logo"
+          alt="Marvel logo"
           width={200}
           height={100}
           className="max-h-11 lg:h-11"
+          priority
         />
 
         <h1 className="text-4xl sm:text-5xl md:text-[70px] md:leading-[1.1] font-semibold max-w-md">
@@ -47,7 +61,7 @@ const HeroSection = () => {
           <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-all duration-300" />
         </Link>
       </div>
-    </div>
+    </section>
   );
 };
 

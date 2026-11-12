@@ -27,15 +27,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en" className="scroll-smooth">
-        <body className={`${outfit.variable} antialiased`}>
+    <html lang="en" className="scroll-smooth">
+      <head>
+        <link
+          rel="preconnect"
+          href="https://charmed-griffon-65.clerk.accounts.dev"
+        />
+      </head>
+      <body className={`${outfit.variable} antialiased`}>
+        <ClerkProvider
+          appearance={{
+            variables: {
+              colorPrimary: "#f34265",
+            },
+          }}
+        >
           <Header />
           <Toaster />
           <main className="min-h-[calc(100vh-76px)]">{children}</main>
           <Footer />
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }

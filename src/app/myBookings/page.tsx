@@ -62,7 +62,7 @@ const MyBookings = async () => {
                   {!item.isPaid && (
                     <Link
                       href={`/checkout?amount=${item.amount}&bookingId=${item.id}`}
-                      className="bg-primary hover:bg-primary-foreground transition-colors py-1.5 px-3 rounded-full mb-3 text-sm font-medium"
+                      className="bg-primary hover:bg-primary/90 transition-colors py-1.5 px-3 rounded-full mb-3 text-sm font-medium"
                     >
                       Pay Now
                     </Link>

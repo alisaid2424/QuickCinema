@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "./ui/button";
 import { StarIcon } from "lucide-react";
 import timeFormat from "@/lib/timeFormat";
 import { ShowWithMovie } from "@/types/movie";
@@ -11,15 +10,20 @@ const MovieCard = ({ show }: { show: ShowWithMovie }) => {
   return (
     <Link
       href={`/movie-details/${show.movie.id}`}
-      className="w-80 sm:w-full mx-auto flex flex-col justify-between p-3 bg-gray-800 rounded-2xl hover:-translate-y-1 transition duration-300"
+      className="w-full mx-auto flex flex-col justify-between p-3 bg-gray-800 rounded-2xl hover:-translate-y-1 transition duration-300"
     >
-      <Image
-        src={image_base_url + (show.movie.posterPath ?? "")}
-        alt={`img-movie-${show.movie.title}`}
-        width={400}
-        height={400}
-        className="rounded-lg h-52 w-full object-cover"
-      />
+      <div className="relative rounded-lg h-52 w-full overflow-hidden">
+        <Image
+          src={(image_base_url + (show.movie.posterPath ?? "")).replace(
+            "/original/",
+            "/w500/",
+          )}
+          alt={`${show.movie.title} poster`}
+          fill
+          sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 20vw"
+          className="rounded-lg object-cover"
+        />
+      </div>
 
       <p className="font-semibold mt-2 truncate">{show.movie.title}</p>
 
@@ -33,9 +37,9 @@ const MovieCard = ({ show }: { show: ShowWithMovie }) => {
       </p>
 
       <div className="flex items-center justify-between mt-4 pb-3">
-        <Button className="rounded-full font-medium cursor-pointer text-white">
+        <span className="rounded-full bg-primary text-white font-medium text-sm px-4 py-2">
           Buy Tickets
-        </Button>
+        </span>
 
         <p className="flex items-center gap-1 text-sm text-gray-400">
           <StarIcon className="w-4 h-4 text-primary fill-primary" />

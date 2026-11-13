@@ -39,13 +39,19 @@ const Header = () => {
 
           <div
             className={`max-md:absolute max-md:top-0 max-md:start-0 max-md:font-medium max-md:text-lg z-50 flex flex-col md:flex-row items-center gap-8 max-md:justify-center md:px-8 md:py-3 max-md:h-screen md:rounded-full backdrop-blur bg-black/70 md:bg-white/10 md:border md:border-gray-300/20 overflow-hidden ${
-              isOpen ? "max-md:w-full" : "max-md:w-0"
+              isOpen
+                ? "max-md:w-full max-md:visible"
+                : "max-md:w-0 max-md:invisible"
             } transition-[width] duration-300`}
           >
-            <XIcon
-              className="md:hidden absolute top-6 right-6 w-6 h-6 cursor-pointer"
-              onClick={() => setIsOpen((prev) => !prev)}
-            />
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setIsOpen(false)}
+              className="md:hidden absolute top-6 right-6 cursor-pointer"
+            >
+              <XIcon className="w-6 h-6" />
+            </button>
 
             {links.map((link, idx) => (
               <Link
@@ -79,7 +85,10 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-8">
-            <SearchIcon className="max-md:hidden w-6 h-6 cursor-pointer" />
+            <SearchIcon
+              aria-hidden="true"
+              className="max-md:hidden w-6 h-6 cursor-pointer"
+            />
 
             {user ? (
               <UserButton>
@@ -102,17 +111,22 @@ const Header = () => {
                     },
                   })
                 }
-                className="rounded-full text-white hover:bg-primary-foreground transition-colors duration-300"
+                className="rounded-full text-white hover:bg-primary/90 transition-colors duration-300"
               >
                 Login
               </Button>
             )}
           </div>
 
-          <MenuIcon
-            onClick={() => setIsOpen((prev) => !prev)}
-            className="max-md:ms-4 md:hidden w-8 h-8 cursor-pointer"
-          />
+          <button
+            type="button"
+            aria-label="Open menu"
+            aria-expanded={isOpen}
+            onClick={() => setIsOpen(true)}
+            className="max-md:ms-4 md:hidden cursor-pointer"
+          >
+            <MenuIcon className="w-8 h-8" />
+          </button>
         </div>
       </header>
     )

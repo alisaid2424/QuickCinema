@@ -47,7 +47,7 @@ export const EmailTemplate = ({ body }: { body: EmailTemplateProps }) => {
           {/* Main Message */}
           <Text>
             Your booking for
-            <strong style={{ color: "#F84565" }}>{body.sub}</strong> is
+            <strong style={{ color: "#DA0B2A" }}>{body.sub}</strong> is
             confirmed.
           </Text>
 

@@ -44,14 +44,14 @@ const MovieDetails = async ({ params }: PageProps) => {
   }
 
   return (
-    <div className="container-section pt-14 md:pt-32">
+    <div className="container-section py-24">
       <div className="flex flex-col md:flex-row gap-8">
         <Image
           src={image_base_url + (movie.posterPath ?? "")}
           alt={`img-${movie.title}`}
           width={400}
           height={500}
-          className="max-md:mx-auto rounded-xl h-96 max-w-72 object-cover"
+          className="max-md:mx-auto rounded-xl h-96 sm:max-w-72 object-cover"
         />
 
         <div className="relative flex flex-col gap-3">
@@ -59,7 +59,7 @@ const MovieDetails = async ({ params }: PageProps) => {
 
           <p className="text-primary">ENGLISH</p>
 
-          <h2 className="text-4xl font-semibold max-w-96 text-balance">
+          <h2 className="text-2xl sm:text-4xl font-semibold max-w-96 text-balance">
             {movie.title}
           </h2>
 

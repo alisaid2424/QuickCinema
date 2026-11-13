@@ -9,7 +9,6 @@ import Footer from "@/components/Footer";
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -28,17 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head>
-        <link
-          rel="preconnect"
-          href="https://charmed-griffon-65.clerk.accounts.dev"
-        />
-      </head>
       <body className={`${outfit.variable} antialiased`}>
         <ClerkProvider
           appearance={{
             variables: {
-              colorPrimary: "#f34265",
+              colorPrimary: "#DA0B2A",
             },
           }}
         >

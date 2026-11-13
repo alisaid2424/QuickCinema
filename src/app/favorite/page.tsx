@@ -19,7 +19,7 @@ const Favorite = async () => {
       <h2 className="text-lg font-medium my-5">Your Favourite Movies</h2>
 
       {favoriteMovies.length ? (
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-full">
+        <div className="grid min-[480px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-full">
           {favoriteMovies.map((movie) => (
             <MovieCard key={movie.id} show={movie} />
           ))}

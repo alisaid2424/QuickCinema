@@ -5,20 +5,17 @@ import { useToast } from "@/hooks/use-toast";
 import { updateFavoriteUser } from "@/server/actions/user";
 import { useClerk, useUser } from "@clerk/nextjs";
 import { Heart } from "lucide-react";
-import { useState } from "react";
 
 const AddToFavoriteButton = ({
   movieId,
-  initialFavorite,
+  isFavorite,
 }: {
   movieId: string;
-  initialFavorite: boolean;
+  isFavorite: boolean;
 }) => {
   const { user } = useUser();
   const { toast } = useToast();
   const { openSignIn } = useClerk();
-
-  const [isFavorite, setIsFavorite] = useState(initialFavorite);
 
   const handleAddToFavoriteButton = async () => {
     try {
@@ -36,7 +33,6 @@ const AddToFavoriteButton = ({
       const res = await updateFavoriteUser(movieId);
 
       if (res.status === 200) {
-        setIsFavorite((res.favorites ?? []).includes(movieId));
         toast({
           title: "Success! 🎉",
           description: res.message,

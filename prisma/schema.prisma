@@ -19,7 +19,8 @@ model User {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  bookings Booking[] @relation("UserBookings")
+  bookings  Booking[]  @relation("UserBookings")
+  favorites Favorite[]
 }
 
 model Movie {
@@ -42,7 +43,8 @@ model Movie {
   genres Genre[] @relation("MovieGenres")
   casts  Cast[]  @relation("MovieCasts")
 
-  shows Show[]
+  shows     Show[]
+  favorites Favorite[]
 }
 
 model Genre {
@@ -85,6 +87,19 @@ model Booking {
   // Show Relation
   showId String
   show   Show   @relation(fields: [showId], references: [id], onDelete: Cascade)
+}
+
+model Favorite {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  movieId String
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, movieId])
 }
 
 enum UserRole {

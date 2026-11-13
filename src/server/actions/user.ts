@@ -103,36 +103,50 @@ export async function deleteUser(clerkUserId: string) {
 
 export async function updateFavoriteUser(movieId: string) {
   try {
-    const { userId } = await auth();
+    const { userId: clerkUserId } = await auth();
 
-    if (!userId) {
+    if (!clerkUserId) {
       return {
         status: 401,
         message: "Unauthorized",
       };
     }
 
-    const user = await clerkClient.users.getUser(userId);
+    const dbUser = await prisma.user.findUnique({
+      where: { clerkUserId },
+    });
 
-    let favorites = (user.privateMetadata?.favorites as string[]) ?? [];
-
-    if (!Array.isArray(favorites)) {
-      favorites = [];
+    if (!dbUser) {
+      return {
+        status: 404,
+        message: "User not found in database",
+      };
     }
 
-    // Toggle logic
-    if (!favorites.includes(movieId)) {
-      favorites.push(movieId);
-    } else {
-      favorites = favorites.filter((id) => id !== movieId);
-    }
-
-    await clerkClient.users.updateUserMetadata(userId, {
-      privateMetadata: {
-        ...user.privateMetadata,
-        favorites,
+    const userId = dbUser.id;
+    const existingFavorite = await prisma.favorite.findUnique({
+      where: {
+        userId_movieId: {
+          userId,
+          movieId,
+        },
       },
     });
+
+    if (existingFavorite) {
+      await prisma.favorite.delete({
+        where: {
+          id: existingFavorite.id,
+        },
+      });
+    } else {
+      await prisma.favorite.create({
+        data: {
+          userId,
+          movieId,
+        },
+      });
+    }
 
     revalidatePath(Routes.ROOT);
     revalidatePath(Pages.FAVORITE);
@@ -140,14 +154,14 @@ export async function updateFavoriteUser(movieId: string) {
 
     return {
       status: 200,
-      message: "Favorite movies updated",
-      favorites,
+      message: existingFavorite
+        ? "Removed from favorites"
+        : "Added to favorites",
     };
   } catch (error) {
-    console.error(error);
     return {
       status: 500,
-      message: "internal server error",
+      message: error instanceof Error ? error.message : "internal server error",
     };
   }
 }

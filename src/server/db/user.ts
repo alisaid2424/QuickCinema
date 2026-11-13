@@ -1,7 +1,6 @@
 import { USERS_PER_PAGE } from "@/constants/enums";
 import { cache } from "@/lib/cache";
 import prisma from "@/lib/db";
-import clerkClient from "@clerk/clerk-sdk-node";
 
 export const getUsers = cache(
   async (pageNumber: number) => {
@@ -14,7 +13,7 @@ export const getUsers = cache(
     return users;
   },
   ["users"],
-  { revalidate: 3600 }
+  { revalidate: 3600 },
 );
 
 export const getUser = cache(
@@ -24,7 +23,7 @@ export const getUser = cache(
     return await prisma.user.findUnique({ where: query });
   },
   [`user-${crypto.randomUUID()}`],
-  { revalidate: 3600 }
+  { revalidate: 3600 },
 );
 
 export const getUserBookings = cache(
@@ -58,36 +57,61 @@ export const getUserBookings = cache(
   },
 
   ["get-user-bookings"],
-  { revalidate: 3600 }
+  { revalidate: 3600 },
 );
 
 export const getUserFavorites = cache(
-  async (userId: string) => {
-    const user = await clerkClient.users.getUser(userId);
+  async (clerkUserId: string) => {
+    const dbUser = await prisma.user.findUnique({
+      where: { clerkUserId },
+      select: { id: true },
+    });
 
-    const favorites = Array.isArray(user?.privateMetadata?.favorites)
-      ? (user.privateMetadata.favorites as string[])
-      : [];
+    if (!dbUser) {
+      return [];
+    }
+
+    const favorites = await prisma.favorite.findMany({
+      where: {
+        userId: dbUser.id,
+      },
+      include: {
+        movie: {
+          include: {
+            genres: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
     if (!favorites.length) return [];
+
+    const movieIds = favorites.map((fav) => fav.movieId);
 
     const shows = await prisma.show.findMany({
       where: {
         movieId: {
-          in: favorites,
+          in: movieIds,
         },
       },
       include: {
-        movie: { include: { genres: true } },
+        movie: {
+          include: {
+            genres: true,
+          },
+        },
       },
     });
 
-    const uniqueMovies = Array.from(
-      new Map(shows.map((s) => [s.movie.id, s])).values()
+    const uniqueShows = Array.from(
+      new Map(shows.map((s) => [s.movie.id, s])).values(),
     );
 
-    return uniqueMovies;
+    return uniqueShows;
   },
   ["get-user-favorites"],
-  { revalidate: 3600 }
+  { revalidate: 3600 },
 );

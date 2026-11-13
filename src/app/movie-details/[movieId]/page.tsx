@@ -9,8 +9,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import AddToFavoriteButton from "./_components/AddToFavoriteButton";
-import { clerkClient } from "@clerk/clerk-sdk-node";
 import { auth } from "@clerk/nextjs/server";
+import prisma from "@/lib/db";
 
 type PageProps = {
   params: Promise<{
@@ -28,12 +28,19 @@ const MovieDetails = async ({ params }: PageProps) => {
   }
 
   const { userId } = await auth();
-  let isFavorite = false;
+  let userFavoriteIds: string[] = [];
 
   if (userId) {
-    const user = await clerkClient.users.getUser(userId);
-    const favorites = (user.privateMetadata?.favorites as string[]) || [];
-    isFavorite = favorites.includes(movieId);
+    const dbUser = await prisma.user.findUnique({
+      where: { clerkUserId: userId },
+      select: {
+        favorites: { select: { movieId: true } },
+      },
+    });
+
+    if (dbUser) {
+      userFavoriteIds = dbUser.favorites.map((fav) => fav.movieId);
+    }
   }
 
   return (
@@ -84,7 +91,7 @@ const MovieDetails = async ({ params }: PageProps) => {
 
             <AddToFavoriteButton
               movieId={movieId}
-              initialFavorite={isFavorite}
+              isFavorite={userFavoriteIds.includes(movieId)}
             />
           </div>
         </div>

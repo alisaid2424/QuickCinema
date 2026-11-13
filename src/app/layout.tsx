@@ -44,7 +44,7 @@ export default function RootLayout({
         >
           <Header />
           <Toaster />
-          <main className="min-h-[calc(100vh-76px)]">{children}</main>
+          <main className="min-h-dvh">{children}</main>
           <Footer />
         </ClerkProvider>
       </body>

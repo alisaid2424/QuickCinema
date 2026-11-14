@@ -46,6 +46,7 @@ const TrailersSection = () => {
               src={thumbnailUrl(selectedId)}
               alt="trailer"
               fill
+              quality={50}
               sizes="(max-width: 960px) 100vw, 960px"
               className="rounded-lg object-cover brightness-75 group-hover:brightness-90 transition"
             />
@@ -74,6 +75,7 @@ const TrailersSection = () => {
               src={thumbnailUrl(videoId)}
               alt="trailer thumbnail"
               fill
+              quality={50}
               sizes="(max-width: 640px) 22vw, 176px"
               className="object-cover brightness-75"
             />

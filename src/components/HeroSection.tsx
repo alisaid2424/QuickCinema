@@ -13,8 +13,8 @@ const HeroSection = () => {
           fill
           priority
           fetchPriority="high"
+          quality={50}
           sizes="100vw"
-          quality={75}
           className="object-cover object-center"
         />
         <div className="overlay absolute inset-0 w-full h-full bg-black/60" />

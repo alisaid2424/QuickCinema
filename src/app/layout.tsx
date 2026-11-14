@@ -29,6 +29,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={`${outfit.variable} antialiased`}>
         <ClerkProvider
+          telemetry={{ disabled: true }}
           appearance={{
             variables: {
               colorPrimary: "#DA0B2A",

@@ -44,14 +44,15 @@ const MovieDetails = async ({ params }: PageProps) => {
   }
 
   return (
-    <div className="container-section py-24">
+    <div className="container-section pb-12 pt-28">
       <div className="flex flex-col md:flex-row gap-8">
         <Image
           src={image_base_url + (movie.posterPath ?? "")}
           alt={`img-${movie.title}`}
-          width={400}
+          width={500}
           height={500}
-          className="max-md:mx-auto rounded-xl h-96 sm:max-w-72 object-cover"
+          priority
+          className="max-md:mx-auto rounded-xl h-96 md:max-w-72 object-cover"
         />
 
         <div className="relative flex flex-col gap-3">
@@ -121,7 +122,7 @@ const MovieDetails = async ({ params }: PageProps) => {
 
       <p className="text-lg font-medium mt-20 mb-8">You Many Also Like</p>
 
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <div className="grid min-[480px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {shows.slice(0, 4).map((show, index) => (
           <MovieCard key={index} show={show} />
         ))}

@@ -20,6 +20,7 @@ const MovieCard = ({ show }: { show: ShowWithMovie }) => {
           )}
           alt={`${show.movie.title} poster`}
           fill
+          quality={50}
           sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 20vw"
           className="rounded-lg object-cover"
         />

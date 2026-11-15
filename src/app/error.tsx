@@ -11,7 +11,7 @@ interface ErrorPageProps {
 
 const ErrorPage = ({ error, reset }: ErrorPageProps) => {
   return (
-    <div className="element-center flex-col min-h-[calc(100vh-60px)] px-4 pb-14">
+    <div className="element-center flex-col min-h-dvh px-4 pb-14">
       <div className="w-full max-w-xs">
         <LottieHandler type="error" message={error.message} />
 

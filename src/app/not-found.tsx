@@ -3,7 +3,7 @@ import LottieHandler from "@/components/LottieHandler";
 
 const NotFoundPage = () => {
   return (
-    <section className="element-center flex-col min-h-[calc(100vh-76px)] px-4">
+    <section className="element-center flex-col min-h-dvh px-4">
       <div className="w-full max-w-md">
         <LottieHandler
           type="notFound"

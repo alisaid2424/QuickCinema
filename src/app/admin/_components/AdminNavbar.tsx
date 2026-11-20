@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const AdminNavbar = () => {
   return (
-    <div className="flex items-center justify-between py-5 px-6 md:px-10">
+    <div className="sticky top-0 flex items-center justify-between py-5 px-6 md:px-10">
       <Link href={Routes.ROOT}>
         <Logo />
       </Link>

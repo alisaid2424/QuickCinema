@@ -17,7 +17,7 @@ const MyBookings = async () => {
   const bookings = await getUserBookings(clerkUserId);
 
   return (
-    <div className="relative container-section py-10 min-h-[100vh]">
+    <div className="relative container-section py-28 min-h-dvh">
       <BlurCircle top="100px" left="100px" />
 
       <div>

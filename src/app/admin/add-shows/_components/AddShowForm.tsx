@@ -77,7 +77,7 @@ const AddShowForm = ({ movies }: { movies: MovieTMDB[] }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-12">
         {/* Movie Selection */}
         <FormField
           control={form.control}

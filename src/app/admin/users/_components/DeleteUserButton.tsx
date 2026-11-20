@@ -50,7 +50,7 @@ const DeleteUserButton = ({ userId, onSuccess }: DeleteUserButtonProps) => {
   };
 
   return (
-    <Button onClick={handleDelete} variant="destructive" size="icon">
+    <Button onClick={handleDelete} className="bg-primary" size="icon">
       <Trash2 size={20} />
     </Button>
   );

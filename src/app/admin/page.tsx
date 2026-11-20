@@ -44,14 +44,14 @@ const AdminPage = async () => {
     <>
       <Title text1="Admin" text2="Dashboard" />
 
-      <div className="relative flex flex-col gap-4 mt-6">
+      <div className="relative flex flex-col gap-4 mt-6 max-w-6xl">
         <BlurCircle top="-100px" left="0" />
 
-        <div className="flex flex-wrap gap-4 w-full">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
           {dashboardCards.map((card, idx) => (
             <div
               key={idx}
-              className="flex items-center justify-between px-4 py-3 bg-primary/10 border border-primary/20 rounded-md max-w-52 w-full"
+              className="flex items-center justify-between px-4 py-3 bg-primary/10 border border-primary/20 rounded-md"
             >
               <div className="">
                 <h3 className="text-sm">{card.title}</h3>
@@ -64,7 +64,7 @@ const AdminPage = async () => {
 
         <p className="mt-10 text-lg font-medium">Active Shows</p>
 
-        <div className="relative mt-4 max-w-6xl">
+        <div className="relative mt-4 pb-12">
           <BlurCircle top="100px" left="-10%" />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">

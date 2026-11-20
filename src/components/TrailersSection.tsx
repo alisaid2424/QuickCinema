@@ -19,7 +19,7 @@ const TrailersSection = () => {
   };
 
   return (
-    <div className="px-6 md:px-16 lg:px-24 xl:px-44 py-20 overflow-hidden">
+    <div className="container-section py-20 overflow-hidden" id="trailers">
       <h2 className="text-gray-300 font-medium text-lg max-w-[960px] mx-auto">
         Trailers
       </h2>

@@ -15,7 +15,7 @@ const PaymentConfirm = () => {
   }, [router]);
 
   return (
-    <div className="h-[calc(100vh-114px)] flex flex-col justify-center items-center gap-5">
+    <div className="h-screen flex flex-col justify-center items-center gap-5">
       <div className="flex justify-center items-center relative">
         <Image
           className="absolute p-5"

@@ -122,7 +122,7 @@ const CheckoutForm = ({ amount, bookingId }: CheckoutFormProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-90px)] py-10">
+    <div className="flex flex-col items-center justify-center min-h-dvh pt-28 pb-10">
       <form
         onSubmit={handleSubmit}
         className="container w-full md:w-2/3 lg:w-2/4"

@@ -7,7 +7,7 @@ const MoviesPage = async () => {
   const shows = await getShows();
 
   return (
-    <div className="container-section relative my-20 min-h-dvh">
+    <div className="container-section relative py-20 min-h-dvh">
       <BlurCircle top="50px" left="0" />
       <BlurCircle bottom="50px" right="50px" />
 

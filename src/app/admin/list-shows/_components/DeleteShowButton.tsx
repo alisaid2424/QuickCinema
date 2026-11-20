@@ -51,7 +51,7 @@ const DeleteShowButton = ({ showId, onSuccess }: DeleteShowButtonProps) => {
   };
 
   return (
-    <Button onClick={handleDelete} variant="destructive" size="icon">
+    <Button onClick={handleDelete} className="bg-primary ms-2" size="icon">
       <Trash2 size={20} />
     </Button>
   );

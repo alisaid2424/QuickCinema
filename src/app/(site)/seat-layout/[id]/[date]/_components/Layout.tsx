@@ -88,7 +88,7 @@ const Layout = ({ date, dateTime, occupiedSeats }: LayoutProps) => {
   };
 
   return (
-    <div className="container-section flex flex-col md:flex-row py-24">
+    <div className="container-section flex flex-col md:flex-row py-32">
       {/* Available Timings */}
       <div className="w-60 bg-primary/10 border border-primary/20 rounded-lg py-10 h-max md:sticky md:top-30">
         <p className="text-lg font-semibold px-6">Available Timings</p>

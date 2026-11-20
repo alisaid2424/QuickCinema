@@ -35,7 +35,7 @@ const AdminSidebar = () => {
   };
 
   return (
-    <div className=" md:w-40 lg:w-64 w-16 border-r min-h-screen text-sm border-gray-300/20 pt-8 flex flex-col">
+    <div className="md:w-40 lg:w-64 w-16 border-r text-sm border-gray-300/20 pt-8 flex flex-col overflow-hidden">
       <Image
         src={
           user?.imageUrl ??

@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
-import Footer from "@/components/Footer";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -27,6 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://image.tmdb.org" />
+        <link rel="dns-prefetch" href="https://img.youtube.com" />
+      </head>
       <body className={`${outfit.variable} antialiased`}>
         <ClerkProvider
           telemetry={{ disabled: true }}
@@ -36,10 +38,8 @@ export default function RootLayout({
             },
           }}
         >
-          <Header />
           <Toaster />
-          <main className="min-h-dvh">{children}</main>
-          <Footer />
+          {children}
         </ClerkProvider>
       </body>
     </html>
